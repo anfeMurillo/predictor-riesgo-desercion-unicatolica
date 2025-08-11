@@ -41,6 +41,9 @@ END;
 UPDATE estudiantes SET periodo_inicio = 202210
 WHERE periodo_inicio = 202201;
 
+UPDATE estudiantes SET periodo_inicio = 202310
+WHERE periodo_inicio = 202301;
+
 -- Esto corrige los estudiantes que 
 -- estaban en Estudiantes_UNIS pero no en PGA
 
