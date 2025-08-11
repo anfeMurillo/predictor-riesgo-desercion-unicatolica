@@ -1,0 +1,13 @@
+ipykernel==6.30.0
+
+pandas==2.3.1
+numpy==2.3.0
+
+seaborn==0.13.2
+matplotlib==3.10.3
+
+scikit-learn==1.7.1
+
+sphinx
+sphinxawesome_theme
+esbonio
