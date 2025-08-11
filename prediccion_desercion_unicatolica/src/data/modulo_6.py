@@ -5,7 +5,15 @@ path = p.Path('../../data/raw/datos.csv')
 
 df = pd.read_csv(path)
 
-df = df.apply(lambda x: pd.to_numeric(x, errors='coerce')).astype(float)
+cols_com = df.columns[8:35].to_list()
+for col in cols_com:
+	if col in df.columns:
+		df[col] = df[col].str.replace(',', '.').astype(float)
+
+cols_flt = df.columns[8:35].to_list()
+for col in cols_flt:
+	if col in df.columns:
+		df[col] = pd.to_numeric(df[col], errors='coerce').astype(float)
 
 cols_int = ['id','edad','genero','estrato','residencia','estado_civil','periodo_inicio','repitencias_total','desertor']
 for col in cols_int:
