@@ -5,12 +5,12 @@ path = p.Path('../../data/raw/datos.csv')
 
 df = pd.read_csv(path)
 
-cols_com = df.columns[8:35].to_list()
+cols_com = df.columns[9:28].to_list()
 for col in cols_com:
 	if col in df.columns:
 		df[col] = df[col].str.replace(',', '.').astype(float)
 
-cols_flt = df.columns[8:35].to_list()
+cols_flt = df.columns[9:28].to_list()
 for col in cols_flt:
 	if col in df.columns:
 		df[col] = pd.to_numeric(df[col], errors='coerce').astype(float)
