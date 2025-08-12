@@ -43,11 +43,3 @@ WHERE periodo_inicio = 202201;
 
 UPDATE estudiantes SET periodo_inicio = 202310
 WHERE periodo_inicio = 202301;
-
--- Esto corrige los estudiantes que 
--- estaban en Estudiantes_UNIS pero no en PGA
-
-DELETE FROM estudiantes
-WHERE id_estudiante NOT IN (
-SELECT DISTINCT id_estudiante FROM promedios
-WHERE id_estudiante IN (SELECT id_estudiante FROM estudiantes));

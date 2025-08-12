@@ -6,6 +6,14 @@ ORDER BY ID_ESTUDIANTE;
 UPDATE promedios SET periodo = 202210
 WHERE periodo = 202201;
 
+-- Esto corrige los estudiantes que 
+-- estaban en Estudiantes_UNIS pero no en PGA
+
+DELETE FROM estudiantes
+WHERE id_estudiante NOT IN (
+SELECT DISTINCT id_estudiante FROM promedios
+WHERE id_estudiante IN (SELECT id_estudiante FROM estudiantes));
+
 CREATE VIEW promedios_final AS
 SELECT
     id_estudiante,
