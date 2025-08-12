@@ -15,34 +15,34 @@ SELECT DISTINCT id_estudiante FROM promedios
 WHERE id_estudiante IN (SELECT id_estudiante FROM estudiantes));
 
 CREATE VIEW promedios_final AS
+WITH temporal AS (
+SELECT id_estudiante,
+       COUNT(periodo) OVER (PARTITION BY id_estudiante ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS numero_semestre,
+       promedio
+FROM promedios)
+
 SELECT
     id_estudiante,
-    COALESCE(MAX(CASE WHEN periodo = 201810 THEN promedio END),0) AS p201810,
-    COALESCE(MAX(CASE WHEN periodo = 201830 THEN promedio END),0) AS p201830,
-    COALESCE(MAX(CASE WHEN periodo = 201860 THEN promedio END),0) AS p201860,
-    COALESCE(MAX(CASE WHEN periodo = 201880 THEN promedio END),0) AS p201880,
-    COALESCE(MAX(CASE WHEN periodo = 201910 THEN promedio END),0) AS p201910,
-    COALESCE(MAX(CASE WHEN periodo = 201930 THEN promedio END),0) AS p201930,
-    COALESCE(MAX(CASE WHEN periodo = 201960 THEN promedio END),0) AS p201960,
-    COALESCE(MAX(CASE WHEN periodo = 201980 THEN promedio END),0) AS p201980,
-    COALESCE(MAX(CASE WHEN periodo = 202010 THEN promedio END),0) AS p202010,
-    COALESCE(MAX(CASE WHEN periodo = 202030 THEN promedio END),0) AS p202030,
-    COALESCE(MAX(CASE WHEN periodo = 202060 THEN promedio END),0) AS p202060,
-    COALESCE(MAX(CASE WHEN periodo = 202080 THEN promedio END),0) AS p202080,
-    COALESCE(MAX(CASE WHEN periodo = 202110 THEN promedio END),0) AS p202110,
-    COALESCE(MAX(CASE WHEN periodo = 202160 THEN promedio END),0) AS p202160,
-    COALESCE(MAX(CASE WHEN periodo = 202180 THEN promedio END),0) AS p202180,
-    COALESCE(MAX(CASE WHEN periodo = 202210 THEN promedio END),0) AS p202210,
-    COALESCE(MAX(CASE WHEN periodo = 202215 THEN promedio END),0) AS p202215,
-    COALESCE(MAX(CASE WHEN periodo = 202220 THEN promedio END),0) AS p202220,
-    COALESCE(MAX(CASE WHEN periodo = 202225 THEN promedio END),0) AS p202225,
-    COALESCE(MAX(CASE WHEN periodo = 202310 THEN promedio END),0) AS p202310,
-    COALESCE(MAX(CASE WHEN periodo = 202315 THEN promedio END),0) AS p202315,
-    COALESCE(MAX(CASE WHEN periodo = 202320 THEN promedio END),0) AS p202320,
-    COALESCE(MAX(CASE WHEN periodo = 202325 THEN promedio END),0) AS p202325,
-    COALESCE(MAX(CASE WHEN periodo = 202410 THEN promedio END),0) AS p202410,
-    COALESCE(MAX(CASE WHEN periodo = 202415 THEN promedio END),0) AS p202415,
-    COALESCE(MAX(CASE WHEN periodo = 202420 THEN promedio END),0) AS p202420,
-    COALESCE(MAX(CASE WHEN periodo = 202425 THEN promedio END),0) AS p202425
-FROM promedios
+    COALESCE(MAX(CASE WHEN numero_semestre = 1 THEN promedio END),0) AS semestre_1,
+    COALESCE(MAX(CASE WHEN numero_semestre = 2 THEN promedio END),0) AS semestre_2,
+    COALESCE(MAX(CASE WHEN numero_semestre = 3 THEN promedio END),0) AS semestre_3,
+    COALESCE(MAX(CASE WHEN numero_semestre = 4 THEN promedio END),0) AS semestre_4,
+    COALESCE(MAX(CASE WHEN numero_semestre = 5 THEN promedio END),0) AS semestre_5,
+    COALESCE(MAX(CASE WHEN numero_semestre = 6 THEN promedio END),0) AS semestre_6,
+    COALESCE(MAX(CASE WHEN numero_semestre = 7 THEN promedio END),0) AS semestre_7,
+    COALESCE(MAX(CASE WHEN numero_semestre = 8 THEN promedio END),0) AS semestre_8,
+    COALESCE(MAX(CASE WHEN numero_semestre = 9 THEN promedio END),0) AS semestre_9,
+    COALESCE(MAX(CASE WHEN numero_semestre = 10 THEN promedio END),0) AS semestre_10,
+    COALESCE(MAX(CASE WHEN numero_semestre = 11 THEN promedio END),0) AS semestre_11,
+    COALESCE(MAX(CASE WHEN numero_semestre = 12 THEN promedio END),0) AS semestre_12,
+    COALESCE(MAX(CASE WHEN numero_semestre = 13 THEN promedio END),0) AS semestre_13,
+    COALESCE(MAX(CASE WHEN numero_semestre = 14 THEN promedio END),0) AS semestre_14,
+    COALESCE(MAX(CASE WHEN numero_semestre = 15 THEN promedio END),0) AS semestre_15,
+    COALESCE(MAX(CASE WHEN numero_semestre = 16 THEN promedio END),0) AS semestre_16,
+    COALESCE(MAX(CASE WHEN numero_semestre = 17 THEN promedio END),0) AS semestre_17,
+    COALESCE(MAX(CASE WHEN numero_semestre = 18 THEN promedio END),0) AS semestre_18,
+    COALESCE(MAX(CASE WHEN numero_semestre = 19 THEN promedio END),0) AS semestre_19,
+    COALESCE(MAX(CASE WHEN numero_semestre = 20 THEN promedio END),0) AS semestre_20
+
+FROM temporal
 GROUP BY id_estudiante;
