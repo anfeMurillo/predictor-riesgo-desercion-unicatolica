@@ -5,10 +5,13 @@ path = p.Path('../../data/raw/datos.csv')
 
 df = pd.read_csv(path)
 
-cols_com = df.columns[9:28].to_list()
+cols_com = df.columns[8:28].to_list()
 for col in cols_com:
-	if col in df.columns:
-		df[col] = df[col].str.replace(',', '.').astype(float)
+    if col in df.columns:
+        try:
+            df[col] = df[col].str.replace(',', '.').astype(float)
+        except:
+            pass  # ignora el error y sigue
 
 cols_flt = df.columns[9:28].to_list()
 for col in cols_flt:
