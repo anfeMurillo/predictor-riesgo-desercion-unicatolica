@@ -1,6 +1,6 @@
 CREATE TABLE objetivo AS
 SELECT
-    id_estudiante,
+    id,
     CASE
         WHEN total_aucensia >= 2 THEN 1
     ELSE 0
@@ -8,18 +8,22 @@ SELECT
 FROM aucensias;
 
 CREATE TABLE datos AS
+
 WITH temporal_3 AS (
+
 WITH temporal_2 AS (
+
 WITH temporal AS (
+    
 SELECT * FROM promedios_final
-INNER JOIN objetivo USING (id_estudiante))
+INNER JOIN objetivo USING (id))
 
 SELECT * FROM repitencias
-INNER JOIN temporal USING (id_estudiante))
+INNER JOIN temporal USING (id))
 
 SELECT * FROM estudiantes
-INNER JOIN temporal_2 USING (id_estudiante))
+INNER JOIN temporal_2 USING (id))
 
-SELECT COUNT(id_estudiante) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS id,* FROM temporal_3;
+SELECT COUNT(id) OVER (ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS id_estudiante,* FROM temporal_3;
 
-ALTER TABLE datos DROP COLUMN id_estudiante;
+ALTER TABLE datos DROP COLUMN id;

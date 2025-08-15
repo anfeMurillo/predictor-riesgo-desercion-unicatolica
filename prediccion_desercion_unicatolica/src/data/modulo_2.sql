@@ -1,28 +1,34 @@
 CREATE TABLE promedios AS
-SELECT ID_ESTUDIANTE AS id_estudiante,PERIODO_ACADEMICO AS periodo,PGA AS promedio FROM PGA
-WHERE ID_ESTUDIANTE IN (SELECT ID_ESTUDIANTE FROM Estudiantes_UNIS)
+SELECT 
+ID_ESTUDIANTE AS id,
+PERIODO_ACADEMICO AS periodo,
+PGA AS promedio 
+FROM PGA
+WHERE ID_ESTUDIANTE IN (SELECT ID_ESTUDIANTE FROM Estudiantes_Info)
 ORDER BY ID_ESTUDIANTE;
 
 UPDATE promedios SET periodo = 202210
 WHERE periodo = 202201;
 
 -- Esto corrige los estudiantes que 
--- estaban en Estudiantes_UNIS pero no en PGA
+-- estaban en Estudiantes pero no en PGA
 
 DELETE FROM estudiantes
-WHERE id_estudiante NOT IN (
-SELECT DISTINCT id_estudiante FROM promedios
-WHERE id_estudiante IN (SELECT id_estudiante FROM estudiantes));
+WHERE id NOT IN (
+SELECT DISTINCT id FROM promedios
+WHERE id IN (SELECT id FROM estudiantes));
 
 CREATE VIEW promedios_final AS
 WITH temporal AS (
-SELECT id_estudiante,
-       COUNT(periodo) OVER (PARTITION BY id_estudiante ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS numero_semestre,
+SELECT id,
+       COUNT(periodo) 
+       OVER 
+       (PARTITION BY id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW ) AS numero_semestre,
        promedio
 FROM promedios)
 
 SELECT
-    id_estudiante,
+    id,
     COALESCE(MAX(CASE WHEN numero_semestre = 1 THEN promedio END),0) AS semestre_1,
     COALESCE(MAX(CASE WHEN numero_semestre = 2 THEN promedio END),0) AS semestre_2,
     COALESCE(MAX(CASE WHEN numero_semestre = 3 THEN promedio END),0) AS semestre_3,
@@ -45,4 +51,4 @@ SELECT
     COALESCE(MAX(CASE WHEN numero_semestre = 20 THEN promedio END),0) AS semestre_20
 
 FROM temporal
-GROUP BY id_estudiante;
+GROUP BY id;

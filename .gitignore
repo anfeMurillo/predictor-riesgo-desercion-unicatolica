@@ -21,6 +21,9 @@
 *.csv
 **/*.csv
 
+*.db
+**/*.db
+
 ### macOS ###
 # General
 .DS_Store

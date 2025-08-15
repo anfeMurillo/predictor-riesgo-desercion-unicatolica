@@ -2,14 +2,14 @@
 
 CREATE TABLE estudiantes as
 
-SELECT ID_ESTUDIANTE as id_estudiante,
+SELECT ID_ESTUDIANTE as id,
        EDAD as edad,
        GENERO as genero,
        ESTRATO as estrato,
        RESIDENCIA as residencia,
        DESC_ESTADO_CIVIL as estado_civil,
        PERIODO_CATALOGO as periodo_inicio
-FROM Estudiantes_UNIS;
+FROM Estudiantes_Info;
 
 UPDATE estudiantes SET residencia = CASE
     WHEN residencia LIKE ('%CALI%') THEN '0'
@@ -34,7 +34,7 @@ UPDATE estudiantes SET estado_civil = CASE
 END;
 
 UPDATE estudiantes SET estrato = CASE
-    WHEN estrato =  0 THEN (SELECT CEILING (AVG(estrato)) from Estudiantes_UNIS)
+    WHEN estrato =  0 THEN (SELECT CEILING (AVG(estrato)) from estudiantes)
     ELSE estrato
 END;
 
